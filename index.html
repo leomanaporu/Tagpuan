@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050608">
+  <meta name="description" content="RESTRICTED ONION NODE // DEEP WEB SURVEILLANCE FEED // CLASSIFIED ENTRY">
+  <meta property="og:title" content="0x7F // ILLEGAL DARKNET INTRUSION">
+  <title>[!] LEVEL-7 ONION NODE // REDACTED SURVEILLANCE FEED</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #040507;
+      --surface: #0a0d12;
+      --surface-border: #1f2733;
+      --crimson: #ff1e38;
+      --crimson-glow: rgba(255, 30, 56, 0.45);
+      --amber: #ffaa00;
+      --terminal-green: #00ff66;
+      --terminal-dim: #008833;
+      --text-main: #d3d9e2;
+      --text-muted: #677589;
+      --mono: "Share Tech Mono", "Consolas", "Courier New", monospace;
+      --pixel: "VT323", monospace;
+      --spot-x: 50%;
+      --spot-y: 50%;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: var(--mono);
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* CRT Scanline & Screen Noise Overlay */
+    .crt-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99;
+      background:
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 3px, 6px 100%;
+      opacity: 0.85;
+    }
+
+    .crt-vignette {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      background: radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.85) 100%);
+      box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.95);
+    }
+
+    /* Screen Glitch & Flicker */
+    @keyframes screenFlicker {
+      0% { opacity: 0.98; }
+      50% { opacity: 1; }
+      52% { opacity: 0.92; }
+      54% { opacity: 1; }
+      80% { opacity: 0.97; }
+      100% { opacity: 1; }
+    }
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100svh;
+      animation: screenFlicker 0.15s infinite;
+      position: relative;
+    }
+
+    /* Fake Tor Browser Bar */
+    .onion-browser-bar {
+      background: #080a0f;
+      border-bottom: 1px solid #1a2230;
+      padding: 6px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      z-index: 20;
+    }
+
+    .tor-network-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-bulb {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--crimson);
+      box-shadow: 0 0 8px var(--crimson);
+      animation: blinkRed 1s infinite alternate;
+    }
+
+    @keyframes blinkRed {
+      from { opacity: 0.3; }
+      to { opacity: 1; filter: drop-shadow(0 0 6px var(--crimson)); }
+    }
+
+    .onion-url-box {
+      display: flex;
+      align-items: center;
+      background: #030406;
+      border: 1px solid #222c3d;
+      padding: 4px 14px;
+      border-radius: 2px;
+      color: #9cb1cc;
+      font-size: 12px;
+      flex: 1;
+      max-width: 600px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .onion-url-box .circuit {
+      color: var(--crimson);
+      font-weight: bold;
+      margin-right: 8px;
+      background: rgba(255, 30, 56, 0.12);
+      padding: 1px 6px;
+      border-radius: 2px;
+      border: 1px solid rgba(255, 30, 56, 0.3);
+      font-size: 10px;
+    }
+
+    .onion-url-box .url {
+      color: #d1d9e6;
+      letter-spacing: 0.04em;
+    }
+
+    .onion-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .sound-toggle-btn {
+      background: #0f141d;
+      border: 1px solid #273447;
+      color: #889bb5;
+      font-family: inherit;
+      font-size: 11px;
+      padding: 4px 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .sound-toggle-btn:hover {
+      border-color: var(--crimson);
+      color: #fff;
+    }
+
+    .sound-toggle-btn[aria-pressed="true"] {
+      border-color: var(--terminal-green);
+      color: var(--terminal-green);
+      background: rgba(0, 255, 102, 0.06);
+    }
+
+    /* Download Button Styles */
+    .download-btn {
+      background: #0f1520;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      font-family: inherit;
+      font-size: 11px;
+      padding: 4px 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+      border-radius: 2px;
+      font-weight: bold;
+    }
+
+    .download-btn:hover {
+      background: rgba(255, 170, 0, 0.18);
+      color: #fff;
+      border-color: #ffd066;
+      box-shadow: 0 0 14px rgba(255, 170, 0, 0.5);
+    }
+
+    .warning-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-download-uac {
+      background: #0e131d;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      font-family: inherit;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      padding: 13px 22px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 0 16px rgba(255, 170, 0, 0.25);
+    }
+
+    .btn-download-uac:hover {
+      background: var(--amber);
+      color: #000;
+      box-shadow: 0 0 25px rgba(255, 170, 0, 0.7);
+    }
+
+    /* Main Dashboard Layout */
+    .dashboard {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      gap: 16px;
+      padding: 16px clamp(12px, 3vw, 36px);
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (max-width: 1080px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Panel Base Styles */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .panel-header {
+      background: #0e1219;
+      border-bottom: 1px solid var(--surface-border);
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #899cb4;
+    }
+
+    .panel-header .title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #cfd9e8;
+    }
+
+    .panel-header .title::before {
+      content: "▶";
+      color: var(--crimson);
+      font-size: 9px;
+    }
+
+    .panel-header .badge-live {
+      background: rgba(255, 30, 56, 0.15);
+      border: 1px solid var(--crimson);
+      color: var(--crimson);
+      padding: 1px 6px;
+      font-size: 9px;
+      font-weight: bold;
+      animation: pulseAlert 1.2s infinite;
+    }
+
+    @keyframes pulseAlert {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Video Surveillance Chamber */
+    .feed-container {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cctv-stage {
+      position: relative;
+      flex: 1;
+      min-height: 480px;
+      background: #020305;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Canvas for Real-time Static Noise & Sinister Shadow */
+    #cctvCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+
+    /* Target Reticle Tracking the Mouse */
+    .target-crosshair {
+      position: absolute;
+      pointer-events: none;
+      width: 80px;
+      height: 80px;
+      border: 1px dashed rgba(255, 30, 56, 0.45);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      left: var(--spot-x);
+      top: var(--spot-y);
+      transition: width 0.1s, height 0.1s;
+      z-index: 15;
+    }
+
+    .target-crosshair::before, .target-crosshair::after {
+      content: "";
+      position: absolute;
+      background: var(--crimson);
+    }
+    .target-crosshair::before {
+      top: 50%; left: 0; right: 0; height: 1px;
+    }
+    .target-crosshair::after {
+      left: 50%; top: 0; bottom: 0; width: 1px;
+    }
+    .target-crosshair .coords {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      color: var(--crimson);
+      white-space: nowrap;
+      text-shadow: 0 0 4px #000;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 0 4px;
+    }
+
+    /* Surveillance HUD Overlays */
+    .cctv-hud-top {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      z-index: 12;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 6px #000, 1px 1px 2px #000;
+    }
+
+    .cctv-cam-id {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rec-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--crimson);
+      box-shadow: 0 0 10px var(--crimson);
+      animation: blinkRed 0.8s infinite;
+    }
+
+    .cctv-hud-bottom {
+      position: absolute;
+      bottom: 14px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      pointer-events: none;
+      z-index: 12;
+      font-size: 10px;
+      color: #9cb0c7;
+      text-shadow: 0 0 6px #000;
+    }
+
+    /* Warning Overlay Message in Feed */
+    .feed-warning-curtain {
+      position: absolute;
+      inset: 0;
+      background: rgba(3, 4, 7, 0.88);
+      backdrop-filter: blur(4px);
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      text-align: center;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+
+    .feed-warning-curtain.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .skull-icon {
+      font-size: 42px;
+      color: var(--crimson);
+      margin-bottom: 12px;
+      text-shadow: 0 0 20px var(--crimson-glow);
+      animation: pulseAlert 1.5s infinite;
+    }
+
+    .warning-glitch-title {
+      font-size: clamp(22px, 4vw, 36px);
+      color: #fff;
+      margin: 0 0 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-shadow: 2px 0 var(--crimson), -2px 0 #00ffff;
+    }
+
+    .warning-body {
+      max-width: 580px;
+      color: #a0b2c6;
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .warning-body span {
+      color: var(--crimson);
+      font-weight: bold;
+    }
+
+    /* Buttons */
+    .btn-danger {
+      background: #8b0014;
+      border: 1px solid var(--crimson);
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      padding: 14px 28px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255, 30, 56, 0.35);
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-danger:hover {
+      background: #b5001c;
+      box-shadow: 0 0 35px rgba(255, 30, 56, 0.75);
+      transform: translateY(-1px);
+    }
+
+    .btn-danger:active {
+      transform: translateY(1px);
+    }
+
+    .btn-action-feed {
+      display: none;
+      background: rgba(18, 3, 6, 0.9);
+      border: 1px solid var(--crimson);
+      color: var(--crimson);
+      font-family: inherit;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      padding: 10px 18px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      pointer-events: auto;
+    }
+
+    .btn-action-feed:hover {
+      background: var(--crimson);
+      color: #fff;
+      box-shadow: 0 0 20px var(--crimson-glow);
+    }
+
+    .btn-action-feed.visible {
+      display: inline-block;
+    }
+
+    /* Right Sidebar: User Insight & Telemetry */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Telemetry Box: The "User Insight" Horror */
+    .telemetry-grid {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 11px;
+    }
+
+    .telemetry-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #141c28;
+      padding-bottom: 6px;
+    }
+
+    .telemetry-label {
+      color: #72849c;
+    }
+
+    .telemetry-value {
+      color: #cfd9e8;
+      font-weight: bold;
+    }
+
+    .telemetry-value.danger {
+      color: var(--crimson);
+      animation: pulseAlert 1s infinite;
+    }
+
+    .telemetry-value.warning {
+      color: var(--amber);
+    }
+
+    .telemetry-value.green {
+      color: var(--terminal-green);
+    }
+
+    /* Spectators / Dark Web Chat Feed */
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 240px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 11px;
+      background: #05070a;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 4px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: #1e2838;
+    }
+
+    .chat-msg {
+      line-height: 1.45;
+    }
+
+    .chat-msg .user {
+      color: #9cb1cc;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+
+    .chat-msg.buyer .user {
+      color: var(--amber);
+    }
+
+    .chat-msg.system {
+      color: var(--crimson);
+      background: rgba(255, 30, 56, 0.08);
+      padding: 4px 6px;
+      border-left: 2px solid var(--crimson);
+    }
+
+    .chat-msg.bid {
+      color: #e2e8f0;
+    }
+    .chat-msg.bid span {
+      color: var(--terminal-green);
+      font-weight: bold;
+    }
+
+    /* Terminal Console Stream */
+    .terminal-box {
+      background: #030406;
+      border-top: 1px solid var(--surface-border);
+      padding: 10px 14px;
+      font-size: 10px;
+      line-height: 1.6;
+      color: #72ff9f;
+      max-height: 120px;
+      overflow-y: hidden;
+      font-family: var(--mono);
+    }
+
+    .terminal-line {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .terminal-line.alert {
+      color: var(--crimson);
+      font-weight: bold;
+    }
+
+    /* Footbar */
+    .onion-footer {
+      background: #07090e;
+      border-top: 1px solid #171f2b;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: #63758d;
+      letter-spacing: 0.08em;
+      z-index: 20;
+    }
+
+    .footer-warning {
+      color: #8f4040;
+    }
+
+    /* Fullscreen Horror Jumpscare Container */
+    .scare {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .scare.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      animation: violentShake 0.05s infinite;
+    }
+
+    @keyframes violentShake {
+      0% { transform: translate(0, 0) scale(1); filter: invert(0) hue-rotate(0deg); }
+      25% { transform: translate(-8px, 6px) scale(1.06); filter: invert(0.2) contrast(200%); }
+      50% { transform: translate(7px, -9px) scale(0.98); filter: invert(0) contrast(300%) saturate(3); }
+      75% { transform: translate(-10px, -5px) scale(1.04); filter: invert(0.4); }
+      100% { transform: translate(6px, 8px) scale(1.02); }
+    }
+
+    .scare-apparition {
+      width: min(94vw, 680px);
+      height: min(94vw, 680px);
+      background-image: url("scare.png");
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: drop-shadow(0 0 50px rgba(255, 0, 0, 0.9)) contrast(180%) brightness(1.2);
+      animation: lungeDeepWeb 0.35s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes lungeDeepWeb {
+      0% { transform: scale(0.2) translateY(50px); opacity: 0; }
+      40% { transform: scale(1.35) translateY(-20px); opacity: 1; }
+      70% { transform: scale(1.05) translateY(5px); }
+      100% { transform: scale(1.22) translateY(0); opacity: 1; }
+    }
+
+    .scare-banner {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #ff0033;
+      font-size: clamp(24px, 6vw, 54px);
+      letter-spacing: 0.25em;
+      font-weight: 900;
+      text-transform: uppercase;
+      text-shadow: 0 0 30px #ff0000, 3px 3px 0 #fff;
+      z-index: 3;
+      animation: glitchText 0.1s infinite;
+    }
+
+    @keyframes glitchText {
+      0% { transform: translate(0, 0); text-shadow: -3px 0 #00ffff, 3px 0 #ff0033; }
+      50% { transform: translate(3px, -2px); text-shadow: 3px 0 #00ff00, -3px 0 #ff0033; }
+      100% { transform: translate(-2px, 2px); text-shadow: -2px 0 #ff0000, 2px 0 #0000ff; }
+    }
+
+    .scare-sub {
+      position: absolute;
+      top: 40px;
+      color: #fff;
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 4px 16px;
+      border: 1px solid var(--crimson);
+      z-index: 3;
+    }
+
+    .scare-dismiss-hint {
+      position: absolute;
+      bottom: 20px;
+      color: #8899aa;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      z-index: 3;
+    }
+
+    /* Screen Flash */
+    .flash {
+      position: fixed;
+      inset: 0;
+      background: #ff002b;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    .flash.active {
+      animation: darkFlash 0.4s ease-out;
+    }
+
+    @keyframes darkFlash {
+      0% { opacity: 0.95; }
+      20% { opacity: 0.2; }
+      40% { opacity: 0.9; }
+      70% { opacity: 0.3; }
+      100% { opacity: 0; }
+    }
+
+    /* Red Room Panic State when Feed is active */
+    body.panic-mode {
+      --surface-border: #4a0d16;
+    }
+  </style>
+</head>
+<body>
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <div class="crt-vignette" aria-hidden="true"></div>
+
+  <div class="app-container">
+    <!-- Top Darknet Onion Browser Bar -->
+    <header class="onion-browser-bar">
+      <div class="tor-network-status">
+        <span class="status-bulb" aria-hidden="true"></span>
+        <span style="color: #ff334b; font-weight: bold;">TOR ROUTED [UNENCRYPTED]</span>
+      </div>
+
+      <div class="onion-url-box">
+        <span class="circuit">CIRCUIT 0x9B // LEAK DETECTED</span>
+        <span class="url">onion://7xk3m9qqvw0z4a82-redroom.onion/stream/cam-04?client=unmasked</span>
+      </div>
+
+      <div class="onion-controls">
+        <span id="watcherCount" style="color: var(--amber); font-weight: bold;">17 ANONYMOUS OBSERVERS</span>
+        <button class="download-btn" id="headerDownloadBtn" type="button" title="Download Standalone Non-Admin UAC Terminal Files">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+          </svg>
+          <span>Download</span>
+        </button>
+        <button class="sound-toggle-btn" id="soundButton" type="button" aria-pressed="false" aria-label="Toggle darknet audio intercept">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M2 5v6h3l5 4V1L5 5H2z"/>
+          </svg>
+          <span id="soundLabel">AUDIO INTERCEPT: OFF</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Area -->
+    <main class="dashboard">
+      <!-- Left: CCTV Surveillance Chamber -->
+      <section class="panel feed-container" aria-label="Surveillance Chamber">
+        <div class="panel-header">
+          <div class="title">LIVE SURVEILLANCE FEED // SECTOR-13 // UNTRACKED STREAM</div>
+          <div class="badge-live">SIGNAL UNSTABLE</div>
+        </div>
+
+        <div class="cctv-stage" id="cctvStage">
+          <!-- Canvas for real-time video static, shadows, and glitches -->
+          <canvas id="cctvCanvas"></canvas>
+
+          <!-- Tracking Crosshair -->
+          <div class="target-crosshair" id="crosshair">
+            <div class="coords" id="coordsText">TARGET: LOCKING...</div>
+          </div>
+
+          <!-- CCTV Top Overlay -->
+          <div class="cctv-hud-top">
+            <div class="cctv-cam-id">
+              <span class="rec-dot"></span>
+              <span>LIVE CAM-04 [ISOLATION CHAMBER]</span>
+            </div>
+            <div id="cctvTimestamp">REC ● 2026-10-20 08:49:12 UTC</div>
+          </div>
+
+          <!-- CCTV Bottom Overlay -->
+          <div class="cctv-hud-bottom">
+            <div>
+              <span>FPS: <strong style="color: #ffaa00;" id="fpsVal">11.8</strong></span> &nbsp;|&nbsp;
+              <span>RESOLUTION: 640x480</span> &nbsp;|&nbsp;
+              <span>IR ILLUMINATION: 100%</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-action-feed" id="hudDownloadBtn" type="button" style="border-color: var(--amber); color: var(--amber);">
+                ⬇ Download UAC
+              </button>
+              <button class="btn-action-feed" id="scareButton" type="button">
+                ⚠ OVERRIDE FEED / FORCE EXTRACTION
+              </button>
+            </div>
+          </div>
+
+          <!-- Initial Warning Curtain -->
+          <div class="feed-warning-curtain" id="warningCurtain">
+            <div class="skull-icon">☠</div>
+            <h1 class="warning-glitch-title">FORBIDDEN DARKNET NODE</h1>
+            <p class="warning-body">
+              YOU ARE ENTERING AN ILLEGAL LEVEL-7 RED ROOM SURVEILLANCE RELAY.<br>
+              <span>PROXY ANONYMIZATION FAILED.</span> YOUR SYSTEM HARDWARE, IP ROUTE, AND PERIPHERALS HAVE BEEN BROADCAST TO ACTIVE NETWORK PEERS.<br><br>
+              <strong>DO NOT PROCEED IF YOU ARE ALONE IN THE ROOM.</strong>
+            </p>
+            <div class="warning-actions">
+              <button class="btn-danger" id="enterButton" type="button">
+                [ DECRYPT & BYPASS SECURITY PROTOCOL ]
+              </button>
+              <button class="btn-download-uac" id="curtainDownloadBtn" type="button">
+                ⬇ Download Now.
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal Intrusion Console at bottom of feed -->
+        <div class="terminal-box" id="terminalBox" aria-live="polite">
+          <span class="terminal-line">[SYS] Connecting to 7xk3m9qqvw0z4a82.onion:9050...</span>
+          <span class="terminal-line">[SYS] Handshake acknowledged. Warning: Certificate revoked by authority.</span>
+        </div>
+      </section>
+
+      <!-- Right: User Insight & Telemetry -->
+      <aside class="sidebar">
+        <!-- Target Telemetry Dossier (User Insight Horror) -->
+        <section class="panel" aria-label="Subject Telemetry">
+          <div class="panel-header">
+            <div class="title">TARGET DOSSIER // RECONNAISSANCE</div>
+            <span style="color: var(--crimson); font-size: 10px; font-weight: bold;">EXTRACTED</span>
+          </div>
+
+          <div class="telemetry-grid">
+            <div class="telemetry-row">
+              <span class="telemetry-label">CLIENT PLATFORM:</span>
+              <span class="telemetry-value" id="clientPlatform">SCANNING...</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-label">HARDWARE THREADS:</span>
+              <span class="telemetry-value" id="clientCores">--</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-label">DISPLAY MATRIX:</span>
+              <span class="telemetry-value" id="clientRes">--</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-label">ESTIMATED PROXIMITY:</span>
+              <span class="telemetry-value danger" id="clientProximity">CALCULATING...</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-label">TARGET HEART RATE:</span>
+              <span class="telemetry-value warning" id="clientBpm">84 BPM [ELEVATED]</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-label">CURSOR ANXIETY INDEX:</span>
+              <span class="telemetry-value danger" id="cursorAnxiety">STEADY</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-label">SURROUNDING AUDIO:</span>
+              <span class="telemetry-value warning" id="audioDecibels">41 dB [BREATHING DETECTED]</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-label">BLIND SPOT INTEGRITY:</span>
+              <span class="telemetry-value danger" id="blindSpot">COMPROMISED (BEHIND CHAIR)</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Live Dark Web Spectator Chat -->
+        <section class="panel chat-container" aria-label="Darknet Chat">
+          <div class="panel-header">
+            <div class="title">LIVE INTERCEPT CHAT // BIDS</div>
+            <span style="color: var(--terminal-green); font-size: 9px;">ACTIVE PEERS</span>
+          </div>
+
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg"><span class="user">Hex_Ripper:</span>new victim connected?</div>
+            <div class="chat-msg"><span class="user">0xSilent:</span>tracing their hardware right now</div>
+            <div class="chat-msg system">SYSTEM: IP packet leak resolved. Observer locked in.</div>
+            <div class="chat-msg bid"><span class="user">DarkBroker:</span>Placed bid: <span>1.85 BTC</span> to activate chamber camera</div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <!-- Footer Bar -->
+    <footer class="onion-footer">
+      <div>NODE: 0x981A-B47 // STANDALONE CONSOLE: <span style="color: var(--amber); font-weight: bold;">Launch_UAC.bat</span> (NON-ADMIN POWERSHELL)</div>
+      <div class="footer-warning">WARNING: DO NOT TURN OFF YOUR MONITOR WHILE SESSION IS ACTIVE.</div>
+      <div>ENCRYPTION: NONE (COMPROMISED)</div>
+    </footer>
+  </div>
+
+  <!-- Fullscreen Flash and Jumpscare Apparition -->
+  <div class="flash" id="flash" aria-hidden="true"></div>
+  <div class="scare" id="scare" role="dialog" aria-modal="true" aria-label="Terminal Intrusion Alert">
+    <div class="scare-sub">CRITICAL SYSTEM BREACH // ACCESS COMPROMISED</div>
+    <div class="scare-apparition" aria-hidden="true"></div>
+    <div class="scare-banner">WE ARE INSIDE YOUR ROOM</div>
+    <div class="scare-dismiss-hint">[ CLICK ANYWHERE OR PRESS ESC TO DISCONNECT ]</div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const enterButton = document.getElementById("enterButton");
+    const scareButton = document.getElementById("scareButton");
+    const soundButton = document.getElementById("soundButton");
+    const soundLabel = document.getElementById("soundLabel");
+    const warningCurtain = document.getElementById("warningCurtain");
+    const scare = document.getElementById("scare");
+    const flash = document.getElementById("flash");
+    const cctvStage = document.getElementById("cctvStage");
+    const cctvCanvas = document.getElementById("cctvCanvas");
+    const crosshair = document.getElementById("crosshair");
+    const coordsText = document.getElementById("coordsText");
+    const cctvTimestamp = document.getElementById("cctvTimestamp");
+    const terminalBox = document.getElementById("terminalBox");
+    const chatMessages = document.getElementById("chatMessages");
+    const watcherCount = document.getElementById("watcherCount");
+
+    // Download Action Buttons
+    const headerDownloadBtn = document.getElementById("headerDownloadBtn");
+    const curtainDownloadBtn = document.getElementById("curtainDownloadBtn");
+    const hudDownloadBtn = document.getElementById("hudDownloadBtn");
+
+    // Telemetry Elements
+    const clientPlatform = document.getElementById("clientPlatform");
+    const clientCores = document.getElementById("clientCores");
+    const clientRes = document.getElementById("clientRes");
+    const clientProximity = document.getElementById("clientProximity");
+    const clientBpm = document.getElementById("clientBpm");
+    const cursorAnxiety = document.getElementById("cursorAnxiety");
+    const audioDecibels = document.getElementById("audioDecibels");
+    const blindSpot = document.getElementById("blindSpot");
+
+    // Audio & State
+    let audioContext = null;
+    let masterGain = null;
+    let soundEnabled = false;
+    let entered = false;
+    let timers = [];
+    let mouseSpeedHistory = [];
+    let lastMousePos = { x: 0, y: 0, time: Date.now() };
+
+    // Jumpscare Audio Asset
+    const jumpscareAudio = new Audio();
+    jumpscareAudio.preload = "auto";
+    const jumpscareAudioReady = fetch("Jumpscare%20Sound.mp3")
+      .then((res) => res.blob())
+      .then((blob) => new Promise((resolve, reject) => {
+        jumpscareAudio.addEventListener("loadedmetadata", resolve, { once: true });
+        jumpscareAudio.addEventListener("error", () => reject(jumpscareAudio.error), { once: true });
+        jumpscareAudio.src = URL.createObjectURL(new Blob([blob], { type: "audio/mpeg" }));
+      }))
+      .catch((err) => console.warn("Local audio fallback available:", err));
+
+    // Populate Real "User Insights" to amplify horror
+    function populateUserInsight() {
+      const userAgent = navigator.userAgent;
+      let os = "UNKNOWN OS (VULNERABLE)";
+      if (userAgent.indexOf("Win") !== -1) os = "WINDOWS NT [SYSTEM COMPROMISED]";
+      else if (userAgent.indexOf("Mac") !== -1) os = "MACOS [SANDBOX BREACHED]";
+      else if (userAgent.indexOf("Linux") !== -1) os = "LINUX KERNEL [ROOT ACCESS LEAKED]";
+      else if (userAgent.indexOf("Android") !== -1) os = "ANDROID [GPS BROADCAST]";
+      else if (userAgent.indexOf("iPhone") !== -1) os = "IOS [DEVICE LOCATED]";
+
+      clientPlatform.textContent = os;
+      clientCores.textContent = `${navigator.hardwareConcurrency || 8} LOGICAL THREADS`;
+      clientRes.textContent = `${window.screen.width}x${window.screen.height} (24-bit)`;
+    }
+    populateUserInsight();
+
+    // Web Audio Synthesizer Functions
+    function getAudioContext() {
+      if (audioContext) return audioContext;
+      const AudioCtor = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtor) return null;
+      audioContext = new AudioCtor();
+      masterGain = audioContext.createGain();
+      masterGain.gain.value = 1.0;
+      masterGain.connect(audioContext.destination);
+      return audioContext;
+    }
+
+    async function enableSound() {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      if (ctx.state === "suspended") await ctx.resume();
+      soundEnabled = true;
+      soundButton.setAttribute("aria-pressed", "true");
+      soundLabel.textContent = "AUDIO INTERCEPT: ACTIVE";
+    }
+
+    // Procedural Darknet Sound Generators
+    function playDialupModemScreech(force = false) {
+      if (!soundEnabled && !force) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+
+      // FM synth carrier + modulator for creepy darknet handshake
+      const carrier = ctx.createOscillator();
+      const mod = ctx.createOscillator();
+      const modGain = ctx.createGain();
+      const gain = ctx.createGain();
+
+      carrier.type = "sawtooth";
+      carrier.frequency.setValueAtTime(1200, now);
+      carrier.frequency.linearRampToValueAtTime(2400, now + 0.3);
+      carrier.frequency.setValueAtTime(800, now + 0.5);
+
+      mod.type = "square";
+      mod.frequency.setValueAtTime(45, now);
+      mod.frequency.linearRampToValueAtTime(190, now + 0.7);
+
+      modGain.gain.setValueAtTime(400, now);
+      mod.connect(modGain);
+      modGain.connect(carrier.frequency);
+
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.12, now + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+
+      carrier.connect(gain);
+      gain.connect(masterGain);
+
+      carrier.start(now);
+      mod.start(now);
+      carrier.stop(now + 0.92);
+      mod.stop(now + 0.92);
+    }
+
+    function playLowDeepHum(freq = 46, duration = 2.5, vol = 0.14) {
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.linearRampToValueAtTime(freq * 0.9, now + duration);
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(140, now);
+
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(vol, now + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(masterGain);
+      osc.start(now);
+      osc.stop(now + duration + 0.05);
+    }
+
+    function playGeigerClick() {
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const buffer = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.02), ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+      const src = ctx.createBufferSource();
+      src.buffer = buffer;
+      const gain = ctx.createGain();
+      gain.gain.value = 0.08;
+      src.connect(gain);
+      gain.connect(masterGain);
+      src.start(now);
+    }
+
+    function playHeartbeatThud() {
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(75, now);
+      osc.frequency.exponentialRampToValueAtTime(28, now + 0.18);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.22, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+      osc.connect(gain);
+      gain.connect(masterGain);
+      osc.start(now);
+      osc.stop(now + 0.25);
+    }
+
+    function playStaticBurstHorror() {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+
+      // Heavy distorted white noise blast
+      const dur = 1.2;
+      const bufSize = Math.floor(ctx.sampleRate * dur);
+      const buf = ctx.createBuffer(2, bufSize, ctx.sampleRate);
+      for (let c = 0; c < 2; c++) {
+        const d = buf.getChannelData(c);
+        for (let i = 0; i < bufSize; i++) d[i] = (Math.random() * 2 - 1);
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+
+      // Waveshaper distortion
+      const shaper = ctx.createWaveShaper();
+      const n = 512;
+      const curve = new Float32Array(n);
+      for (let i = 0; i < n; i++) {
+        const x = (i * 2) / n - 1;
+        curve[i] = ((Math.PI + 300) * x) / (Math.PI + 300 * Math.abs(x));
+      }
+      shaper.curve = curve;
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(2.2, now + 0.01);
+      gain.gain.exponentialRampToValueAtTime(1.4, now + 0.2);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+      src.connect(shaper);
+      shaper.connect(gain);
+      gain.connect(masterGain);
+      src.start(now);
+      src.stop(now + dur + 0.05);
+
+      // Low frequency shockwave
+      const sub = ctx.createOscillator();
+      const subGain = ctx.createGain();
+      sub.type = "sawtooth";
+      sub.frequency.setValueAtTime(110, now);
+      sub.frequency.exponentialRampToValueAtTime(22, now + 0.4);
+      subGain.gain.setValueAtTime(0.0001, now);
+      subGain.gain.exponentialRampToValueAtTime(1.6, now + 0.015);
+      subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
+      sub.connect(subGain);
+      subGain.connect(masterGain);
+      sub.start(now);
+      sub.stop(now + 0.5);
+    }
+
+    // Append text to terminal box
+    function addTerminalLine(text, isAlert = false) {
+      const line = document.createElement("span");
+      line.className = "terminal-line" + (isAlert ? " alert" : "");
+      line.textContent = `[${new Date().toISOString().substring(11, 19)}] ${text}`;
+      terminalBox.appendChild(line);
+      terminalBox.scrollTop = terminalBox.scrollHeight;
+      playGeigerClick();
+    }
+
+    // Append chat message
+    function addChatMessage(user, message, type = "normal") {
+      const msg = document.createElement("div");
+      msg.className = "chat-msg " + type;
+      if (type === "system") {
+        msg.textContent = message;
+      } else {
+        msg.innerHTML = `<span class="user">${user}:</span>${message}`;
+      }
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Real-time Canvas CCTV Simulation (Static, Glitch lines, Lurking silhouette)
+    const ctx = cctvCanvas.getContext("2d");
+    let canvasW, canvasH;
+    let sinisterFigureX = 0.5;
+    let sinisterAlpha = 0;
+
+    function resizeCanvas() {
+      canvasW = cctvCanvas.width = cctvStage.clientWidth || 640;
+      canvasH = cctvCanvas.height = cctvStage.clientHeight || 480;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function renderCCTV() {
+      if (!canvasW || !canvasH) {
+        requestAnimationFrame(renderCCTV);
+        return;
+      }
+
+      // Fill with dark ominous chamber tone
+      ctx.fillStyle = "#04070a";
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      // Room perspective wires and walls
+      ctx.strokeStyle = "rgba(0, 255, 100, 0.04)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      // Back wall rectangle
+      const bw = canvasW * 0.4;
+      const bh = canvasH * 0.4;
+      const bx = (canvasW - bw) / 2;
+      const by = (canvasH - bh) / 2;
+      ctx.strokeRect(bx, by, bw, bh);
+      // Corner perspective lines
+      ctx.moveTo(0, 0); ctx.lineTo(bx, by);
+      ctx.moveTo(canvasW, 0); ctx.lineTo(bx + bw, by);
+      ctx.moveTo(0, canvasH); ctx.lineTo(bx, by + bh);
+      ctx.moveTo(canvasW, canvasH); ctx.lineTo(bx + bw, by + bh);
+      ctx.stroke();
+
+      // Draw faint eerie humanoid silhouette lurking in the isolation chamber
+      if (entered && sinisterAlpha > 0) {
+        ctx.save();
+        ctx.fillStyle = `rgba(0, 0, 0, ${sinisterAlpha})`;
+        ctx.filter = "blur(4px)";
+        const figX = canvasW * sinisterFigureX;
+        const figY = canvasH * 0.42;
+        // Head
+        ctx.beginPath();
+        ctx.arc(figX, figY - 32, 14, 0, Math.PI * 2);
+        ctx.fill();
+        // Torso & elongated neck
+        ctx.beginPath();
+        ctx.moveTo(figX - 18, figY + 45);
+        ctx.lineTo(figX - 8, figY - 20);
+        ctx.lineTo(figX + 8, figY - 20);
+        ctx.lineTo(figX + 18, figY + 45);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Procedural static noise
+      const imgData = ctx.getImageData(0, 0, canvasW, canvasH);
+      const data = imgData.data;
+      const noiseDensity = entered ? 0.38 : 0.22;
+      for (let i = 0; i < data.length; i += 4) {
+        if (Math.random() < noiseDensity) {
+          const val = Math.random() * 85;
+          data[i] = val + 15;     // slight red tint
+          data[i + 1] = val + 25; // greenish darknet phosphor
+          data[i + 2] = val + 15;
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
+
+      // Random horizontal scanline glitch tear
+      if (Math.random() < 0.14) {
+        const tearY = Math.random() * canvasH;
+        const tearH = 2 + Math.random() * 12;
+        ctx.fillStyle = Math.random() < 0.5 ? "rgba(255, 30, 56, 0.25)" : "rgba(0, 255, 120, 0.15)";
+        ctx.fillRect(0, tearY, canvasW, tearH);
+      }
+
+      // Live UTC Clock on HUD
+      const now = new Date();
+      cctvTimestamp.textContent = `REC ● ${now.toISOString().replace("T", " ").substring(0, 19)} UTC`;
+
+      requestAnimationFrame(renderCCTV);
+    }
+    requestAnimationFrame(renderCCTV);
+
+    // Mouse Movement Tracking: Target Reticle & Anxiety Tracking (User Insight)
+    function trackUserPresence(e) {
+      const rect = cctvStage.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+      cctvStage.style.setProperty("--spot-x", `${x}%`);
+      cctvStage.style.setProperty("--spot-y", `${y}%`);
+
+      const now = Date.now();
+      const dt = now - lastMousePos.time;
+      if (dt > 30) {
+        const dist = Math.hypot(e.clientX - lastMousePos.x, e.clientY - lastMousePos.y);
+        const speed = dist / dt;
+        mouseSpeedHistory.push(speed);
+        if (mouseSpeedHistory.length > 20) mouseSpeedHistory.shift();
+
+        const avgSpeed = mouseSpeedHistory.reduce((a, b) => a + b, 0) / mouseSpeedHistory.length;
+        if (avgSpeed > 1.4) {
+          cursorAnxiety.textContent = "EXTREME / TREMBLING";
+          cursorAnxiety.style.color = "var(--crimson)";
+        } else if (avgSpeed > 0.6) {
+          cursorAnxiety.textContent = "RAPID / HESITANT";
+          cursorAnxiety.style.color = "var(--amber)";
+        } else {
+          cursorAnxiety.textContent = "STEADY (FOCUSED)";
+          cursorAnxiety.style.color = "var(--terminal-green)";
+        }
+
+        lastMousePos = { x: e.clientX, y: e.clientY, time: now };
+      }
+
+      if (entered) {
+        coordsText.textContent = `LOCK: [${Math.round(x * 10)}, ${Math.round(y * 10)}] DIST: ${(0.4 + (100 - y) * 0.01).toFixed(2)}m`;
+      }
+    }
+    window.addEventListener("pointermove", trackUserPresence, { passive: true });
+
+    // Click to Enter / Decrypt Darknet Node
+    enterButton.addEventListener("click", async () => {
+      entered = true;
+      warningCurtain.classList.add("hidden");
+      scareButton.classList.add("visible");
+      if (hudDownloadBtn) hudDownloadBtn.classList.add("visible");
+      document.body.classList.add("panic-mode");
+
+      await enableSound();
+      playDialupModemScreech(true);
+      playLowDeepHum(44, 3.5, 0.18);
+
+      addTerminalLine("OVERRIDE INITIATED: Bypassing node handshake...", true);
+      addTerminalLine("WARNING: Target IP exposed to TOR relays.");
+      addTerminalLine("STREAM LIVE: Infiltration feed synchronized.");
+      addTerminalLine("STANDALONE HOOK: Launch_UAC.bat armed for external PowerShell terminal.");
+
+      // Telemetry escalation
+      clientProximity.textContent = "0.74 METERS [IN RANGE]";
+      blindSpot.textContent = "UNCHECKED (BEHIND HEAD)";
+
+      // Lurking sinister silhouette begins to fade into CCTV feed
+      sinisterAlpha = 0.5;
+
+      // Automated Escalation Timeline of Chilling User Insights & Dark Web Chat
+      const horrors = [
+        {
+          delay: 2400,
+          fn: () => {
+            playHeartbeatThud();
+            addChatMessage("0xSilent", "I see their mouse moving. They're reading the screen.");
+            addTerminalLine("ANALYSIS: Subject eye saccades focused on terminal text.");
+            clientBpm.textContent = "96 BPM [RAPID]";
+          }
+        },
+        {
+          delay: 5800,
+          fn: () => {
+            playLowDeepHum(38, 2.8, 0.22);
+            playGeigerClick();
+            watcherCount.textContent = "38 ANONYMOUS OBSERVERS";
+            addChatMessage("DarkBroker", "Subject hardware matches database. Room is dark.");
+            addTerminalLine("AUDIO CAPTURE: Ambient mic picked up heavy respiration.", true);
+            audioDecibels.textContent = "54 dB [WHISPERING BEHIND USER]";
+            sinisterAlpha = 0.82;
+            sinisterFigureX = 0.48;
+          }
+        },
+        {
+          delay: 10500,
+          fn: () => {
+            playHeartbeatThud();
+            playDialupModemScreech();
+            addChatMessage("Crow_09", "DONT LET THEM LOOK AWAY FROM THE SCREEN");
+            addChatMessage("SYSTEM", "ALERT: Remote actuator activated in subject chamber.", "system");
+            clientProximity.textContent = "0.28 METERS [IMMEDIATE PROXIMITY]";
+            clientProximity.style.animation = "blinkRed 0.4s infinite";
+            blindSpot.textContent = "ENTITY LEANING OVER SHOULDER";
+            sinisterAlpha = 0.95;
+            sinisterFigureX = 0.51;
+          }
+        },
+        {
+          delay: 15500,
+          fn: () => {
+            playLowDeepHum(30, 4.0, 0.28);
+            addChatMessage("Void_Seeker", "3... 2... 1... LOOK AT THE CAMERA");
+            addTerminalLine("CRITICAL WARNING: HE IS REACHING FOR YOUR SCREEN.", true);
+            scareButton.textContent = "⚠ WARNING: ENTITY BREACH IMMINENT - OVERRIDE NOW";
+            scareButton.style.animation = "pulseAlert 0.4s infinite";
+          }
+        }
+      ];
+
+      horrors.forEach(({ delay, fn }) => {
+        timers.push(setTimeout(fn, delay));
+      });
+    });
+
+    // The Jumpscare Trigger
+    async function triggerScare() {
+      if (!entered) return;
+      await enableSound();
+
+      // Trigger violent horror visual effects
+      scare.classList.add("active");
+      flash.classList.remove("active");
+      void flash.offsetWidth;
+      flash.classList.add("active");
+
+      // Audio barrage: local jumpscare sound + Web Audio static explosion
+      try {
+        await jumpscareAudioReady;
+        jumpscareAudio.currentTime = 0.84;
+        await jumpscareAudio.play();
+      } catch (err) {
+        console.warn("Jumpscare audio play error:", err);
+      }
+      playStaticBurstHorror();
+
+      // Auto dismiss after 2.8 seconds or manual dismiss
+      timers.push(setTimeout(dismissScare, 2800));
+    }
+
+    function dismissScare() {
+      scare.classList.remove("active");
+      flash.classList.remove("active");
+      addTerminalLine("CONNECTION SEVERED: Host disconnected session.", true);
+    }
+
+    scareButton.addEventListener("click", triggerScare);
+    cctvCanvas.addEventListener("click", () => {
+      if (entered) triggerScare();
+    });
+    scare.addEventListener("click", dismissScare);
+
+    // Automatic Direct Batch Download (Downloads all 3 files straight with 1 click)
+    function downloadFile(url, filename) {
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function triggerBatchDownload() {
+      const files = [
+        { url: "UAC_Terminal.zip", name: "UAC_Terminal.zip" },
+        { url: "Launch_UAC.bat", name: "Launch_UAC.bat" },
+        { url: "uac_prompt.ps1", name: "uac_prompt.ps1" }
+      ];
+
+      addTerminalLine("SYS: Direct batch download initiated — dispatching 3 artifacts...", true);
+
+      files.forEach((file, index) => {
+        setTimeout(() => {
+          downloadFile(file.url, file.name);
+          addTerminalLine(`[DL] Dispatched: ${file.name}`);
+        }, index * 220);
+      });
+    }
+
+    if (headerDownloadBtn) headerDownloadBtn.addEventListener("click", triggerBatchDownload);
+    if (curtainDownloadBtn) curtainDownloadBtn.addEventListener("click", triggerBatchDownload);
+    if (hudDownloadBtn) hudDownloadBtn.addEventListener("click", triggerBatchDownload);
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") dismissScare();
+      if (e.key === "Enter" && entered) triggerScare();
+    });
+
+    // Audio intercept button toggle
+    soundButton.addEventListener("click", async () => {
+      soundEnabled = !soundEnabled;
+      soundButton.setAttribute("aria-pressed", String(soundEnabled));
+      soundLabel.textContent = soundEnabled ? "AUDIO INTERCEPT: ACTIVE" : "AUDIO INTERCEPT: OFF";
+      if (soundEnabled) {
+        const ctx = getAudioContext();
+        if (ctx && ctx.state === "suspended") await ctx.resume();
+        playLowDeepHum(55, 0.5, 0.08);
+      }
+    });
+
+    // Cleanup on unload
+    window.addEventListener("pagehide", () => timers.forEach(clearTimeout));
+  </script>
+</body>
+</html>
