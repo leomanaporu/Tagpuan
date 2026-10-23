@@ -1,0 +1,73 @@
+<!-- admin.html - Admin Dashboard for Multi-Device Command Broker -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Device Admin Grid</title>
+  <style>
+    body { margin:0; font-family:Arial, sans-serif; background:#111; color:#eee; }
+    .banner { position:fixed; top:0; left:0; right:0; background:#222; color:#fff; padding:8px; text-align:center; font-size:0.9rem; z-index:10; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:12px; padding:60px 12px 12px; }
+    .card { background:#000; border:1px solid #444; padding:12px; border-radius:6px; }
+    .card h3 { margin:0 0 6px; font-size:1.1rem; }
+    .card button { margin-top:8px; padding:6px 10px; background:#444; color:#fff; border:none; cursor:pointer; border-radius:4px; }
+    .card button:hover { background:#555; }
+  </style>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="banner">Enterprise Fleet Monitoring — Multi-Device Asset Auditing Panel Active.</div>
+  <div class="grid" id="deviceGrid"></div>
+
+  <script>
+    const socket = io('/admin');
+    const grid = document.getElementById('deviceGrid');
+
+    function renderDevice(device) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.id = `card-${device.deviceID}`;
+      card.innerHTML = `
+        <h3>Device: ${device.deviceID}</h3>
+        <p>Status: <span class="status">${device.status}</span></p>
+        <p>Battery: <span class="battery">${device.battery ?? 'N/A'}</span></p>
+        <p>Last Seen: <span class="lastSeen">${new Date(device.lastSeen).toLocaleTimeString()}</span></p>
+        <button onclick="requestStatus('${device.deviceID}')">Request Status Report</button>
+        <button onclick="requestLogs('${device.deviceID}')">View Telemetry Logs</button>
+      `;
+      return card;
+    }
+
+    function updateCard(device) {
+      const card = document.getElementById(`card-${device.deviceID}`);
+      if (!card) return;
+      card.querySelector('.status').textContent = device.status;
+      card.querySelector('.battery').textContent = device.battery ?? 'N/A';
+      card.querySelector('.lastSeen').textContent = new Date(device.lastSeen).toLocaleTimeString();
+    }
+
+    socket.on('admin_device_list', (list) => {
+      // Clear grid and re‑render for simplicity
+      grid.innerHTML = '';
+      list.forEach(dev => grid.appendChild(renderDevice(dev)));
+    });
+
+    socket.on('telemetry_update', ({ deviceID, telemetry }) => {
+      const card = document.getElementById(`card-${deviceID}`);
+      if (card) {
+        if (telemetry.status) card.querySelector('.status').textContent = telemetry.status;
+        if (telemetry.battery !== undefined) card.querySelector('.battery').textContent = telemetry.battery;
+        card.querySelector('.lastSeen').textContent = new Date().toLocaleTimeString();
+      }
+    });
+
+    function requestStatus(deviceID) {
+      socket.emit('request_status', { deviceID });
+    }
+    function requestLogs(deviceID) {
+      socket.emit('request_logs', { deviceID });
+    }
+  </script>
+</body>
+</html>
+
